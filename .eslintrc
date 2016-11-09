@@ -4,17 +4,13 @@
     "plugin:react/recommended"
   ],
   "plugins": ["react"],
-  "globals": {
-    "Modernizr": true
-  },
   "env": {
     "browser": true,
-    "node": true,
-    "es6": true,
-    "mocha": true
+    "node": true
   },
   "parserOptions": {
     "sourceType": "module",
+    "ecmaVersion": 2016,
     "ecmaFeatures": {
       "blockBindings": true,
       "jsx": true,

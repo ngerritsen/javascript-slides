@@ -1,18 +1,5 @@
 $blue : #3498db;
 $white : #fff;
 $dark : #34495e;
-$purple : #8958b5;
-$red: #e74c3c;
-$orange: #f39c12;
 
-$primary: $blue;
-$secondary: lighten($purple, 4%);
-$local: #1abc9c;
-
-$text: #3a3a3a;
-$text-secondary: lighten($text, 40%);
-$light: lighten($dark, 70%);
-$light-border: lighten($dark, 60%);
-$display-text: lighten($dark, 7.5%);
-$display-text-secondary: lighten($dark, 35%);
-$border: darken($white, 10%);
+$text: desaturate(lighten($dark, 10%), 10%);

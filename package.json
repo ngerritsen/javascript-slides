@@ -7,12 +7,9 @@
     "node": ">6.5"
   },
   "scripts": {
-    "start": "node server",
-    "watch": "npm run favicon; NODE_ENV=development webpack",
-    "build": "npm run favicon; NODE_ENV=production webpack",
-    "test": "eslint .",
-    "generate": "mkdir -p tools/output; rm -Rf tools/output/*; node ./tools/sound-generator.js",
-    "favicon": "mkdir -p public; cp favicon.png public/"
+    "start": "webpack-dev-server --port 8000",
+    "build": "NODE_ENV=production webpack",
+    "test": "eslint ."
   },
   "repository": {
     "type": "git",

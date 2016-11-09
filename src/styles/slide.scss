@@ -1,0 +1,22 @@
+@import 'colors';
+
+.slide {
+  display: none;
+}
+
+.slide--active {
+  display: flex;
+  background-color: $white;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  text-align: center;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.slide__content {
+  overflow: auto;
+  font-size: 3.6vw;
+}
