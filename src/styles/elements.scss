@@ -9,8 +9,15 @@
   font-size: 1.2em;
 }
 
-table, th, td {
+.element-table,
+.element-table th,
+.element-table td {
   border: 2px solid $text;
   border-collapse: collapse;
-  padding: 0.4vw 1.4vw;
+  padding: 0.8vw 1.6vw;
+  font-size: 0.9em;
+
+  .slide--dark & {
+    border: 2px solid $mono-3;
+  }
 }

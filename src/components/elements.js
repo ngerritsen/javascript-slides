@@ -18,3 +18,9 @@ export function Code({ children, language = 'javascript' }) {
     {children}
   </Highlight>
 }
+
+export function Table({ children }) {
+  return <table className="element-table">
+    <tbody>{children}</tbody>
+  </table>
+}

@@ -2,7 +2,6 @@ import React, { Component, PropTypes, Children, cloneElement } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setTotalSlides as setTotalSlidesAction } from '../actions'
-import { getCurrentSlide } from '../helpers'
 
 class Slides extends Component {
   componentDidMount() {
@@ -10,12 +9,19 @@ class Slides extends Component {
     setTotalSlides(children.length)
   }
 
+  _getCurrentSlide() {
+    const currentSlideParam = this.props.params.currentSlide
+    const currentSlide = currentSlideParam ? Number(currentSlideParam) : 0
+    return isNaN(currentSlide) ? 0 : currentSlide
+  }
+
   render() {
-    const { children, currentSlide } = this.props
     return (
       <div>
-        {Children.map(children, (slide, index) =>
-            cloneElement(slide, { active: index === currentSlide })
+        {Children.map(this.props.children, (slide, index) =>
+            cloneElement(slide, {
+              active: index === this._getCurrentSlide()
+            })
         )}
       </div>
     )
@@ -23,15 +29,12 @@ class Slides extends Component {
 }
 
 Slides.propTypes = {
-  currentSlide: PropTypes.number.isRequired,
+  params: PropTypes.object.isRequired,
   setTotalSlides: PropTypes.func.isRequired
 }
 
-function mapStateToProps({ routing, slides }) {
-  return {
-    currentSlide: getCurrentSlide(routing.locationBeforeTransitions),
-    totalSlides: slides.totalSlides
-  }
+function mapStateToProps({ totalSlides }) {
+  return { totalSlides }
 }
 
 function mapDispatchToProps(dispatch) {

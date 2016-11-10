@@ -6,7 +6,7 @@ import createLogger from 'redux-logger'
 import { Router, Route, browserHistory } from 'react-router'
 import { syncHistoryWithStore, routerReducer, routerMiddleware } from 'react-router-redux'
 
-import slidesReducer from './reducer'
+import totalSlidesReducer from './total-slides-reducer'
 import controlMiddleware from './control-middleware'
 import Presentation from './components/presentation'
 
@@ -17,7 +17,7 @@ const rootEl = document.getElementById('root')
 
 const store = createStore(
   combineReducers({
-    slides: slidesReducer,
+    totalSlides: totalSlidesReducer,
     routing: routerReducer
   }),
   applyMiddleware(
@@ -33,6 +33,7 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={Presentation}/>
+      <Route path="/:currentSlide" component={Presentation}/>
     </Router>
   </Provider>,
   rootEl
