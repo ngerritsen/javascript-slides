@@ -2,6 +2,7 @@ import React, { Component, PropTypes, Children, cloneElement } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setTotalSlides as setTotalSlidesAction } from '../actions'
+import { getCurrentSlide } from '../helpers'
 
 class Slides extends Component {
   componentDidMount() {
@@ -26,7 +27,15 @@ Slides.propTypes = {
   setTotalSlides: PropTypes.func.isRequired
 }
 
-export default connect(
-  state => state,
-  dispatch => bindActionCreators({ setTotalSlides: setTotalSlidesAction }, dispatch)
-)(Slides)
+function mapStateToProps({ routing, slides }) {
+  return {
+    currentSlide: getCurrentSlide(routing.locationBeforeTransitions),
+    totalSlides: slides.totalSlides
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setTotalSlides: setTotalSlidesAction }, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Slides)

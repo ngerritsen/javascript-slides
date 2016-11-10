@@ -1,0 +1,37 @@
+@import 'colors';
+
+pre {
+  text-align: left;
+  font-size: 2.5vw;
+}
+
+.hljs {
+  color: $mono-1;
+  font-family: 'Operator Mono', Hack;
+  font-weigt: 400;
+}
+
+.hljs-title {
+  color: $hue-2;
+}
+
+.hljs-keyword {
+  color: $hue-3;
+}
+
+.hljs-string {
+  color: $hue-4;
+}
+
+.hljs-number {
+  color: $hue-6;
+}
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: $hue-6-2;
+}
+
+.hljs-comment {
+  color: $mono-3
+}

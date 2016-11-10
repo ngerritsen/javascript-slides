@@ -1,4 +1,6 @@
-import { NEXT_SLIDE, PREVIOUS_SLIDE } from './constants'
+import { push } from 'react-router-redux'
+
+import { getCurrentSlide } from './helpers'
 
 const ENTER = 13
 const ARROW_LEFT = 37
@@ -11,12 +13,14 @@ export default function controlMiddleware(store) {
 
 function handleKeyPress(event, store) {
   const keyCode = event.keyCode
-
-  if (keyCode === ARROW_LEFT) {
-    store.dispatch({ type: PREVIOUS_SLIDE })
+  const { slides, routing } = store.getState()
+  const currentSlide = getCurrentSlide(routing.locationBeforeTransitions)
+  console.log(slides, routing.locationBeforeTransitions, currentSlide);
+  if (keyCode === ARROW_LEFT && currentSlide > 0) {
+    store.dispatch(push('/?slide=' + (currentSlide - 1)))
   }
 
-  if (keyCode === ARROW_RIGHT || keyCode === ENTER) {
-    store.dispatch({ type: NEXT_SLIDE })
+  if ((keyCode === ARROW_RIGHT || keyCode === ENTER) && currentSlide < slides.totalSlides - 1) {
+    store.dispatch(push('/?slide=' + (currentSlide + 1)))
   }
 }

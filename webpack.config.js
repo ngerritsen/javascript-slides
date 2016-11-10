@@ -22,6 +22,10 @@ const config = {
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract('css!sass')
+      },
+      {
+        test: /\.md$/,
+        loader: 'raw'
       }
     ]
   },
