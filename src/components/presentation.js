@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Secondary, Code, Title, Table } from './elements'
+import { Secondary, Code, Title, Table, Exercise } from './elements'
 import Slides from './slides'
 import Slide from './slide'
 
@@ -13,208 +13,172 @@ function Presentation(props) {
       </Slide>
 
       <Slide>
+        📋
+      </Slide>
+
+      <Slide>
         <Title>Scope 🔭</Title>
       </Slide>
 
       <Slide>
-        A scope is an object with all variables you have access to at a certain point
+        The scope is an imaginary object with all variables you have access to at a certain point.
       </Slide>
 
       <Slide dark>
-        <Code>{
-`⬅
-const pirate = 'Captain Hook';
-const shout = 'Arrr!!';`
-        }</Code>
+        <Code>{`
+          ⬅
+          const pirate = 'Captain Hook';
+          const shout = 'Arrr!!';
+        `}</Code>
       </Slide>
 
       <Slide dark>
-        <Code>{
-`⬅
-const pirate = 'Captain Hook';
-const shout = 'Arrr!!';`
-        }</Code>
-        <Table>
-          <tr>
-            <td>pirate</td>
-            <td>❌</td>
-          </tr>
-          <tr>
-            <td>shout</td>
-            <td>❌</td>
-          </tr>
-        </Table>
+        <Code>{`
+          ⬅
+          const pirate = 'Captain Hook';
+          const shout = 'Arrr!!';
+        `}</Code>
+        <Table rows={[
+          ['pirate', '❌'],
+          ['shout', '❌']
+        ]}/>
       </Slide>
 
       <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-⬅
-const shout = 'Arrr!!';`
-        }</Code>
-        <Table>
-          <tr>
-            <td>pirate</td>
-            <td>'Captain Hook'</td>
-          </tr>
-          <tr>
-            <td>shout</td>
-            <td>❌</td>
-          </tr>
-        </Table>
+        <Code>{`
+          const pirate = 'Captain Hook';
+          ⬅
+          const shout = 'Arrr!!';
+        `}</Code>
+        <Table rows={[
+          ['pirate', 'Captain Hook'],
+          ['shout', '❌']
+        ]}/>
       </Slide>
 
       <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-const shout = 'Arrr!!';
-⬅`
-        }</Code>
-        <Table>
-          <tr>
-            <td>pirate</td>
-            <td>'Captain Hook'</td>
-          </tr>
-          <tr>
-            <td>shout</td>
-            <td>'Arrr!!'</td>
-          </tr>
-        </Table>
+        <Code>{`
+          const pirate = 'Captain Hook';
+          const shout = 'Arrr!!';
+          ⬅
+        `}</Code>
+        <Table rows={[
+          ['pirate', 'Captain Hook'],
+          ['shout', 'Arrr!!']
+        ]}/>
+      </Slide>
+
+      <Slide>
+        <Exercise>Hoisting the pirate.</Exercise>
+      </Slide>
+
+      <Slide>
+        Everything hoisted, but <i>const</i>, <i>let</i> and <i>class</i> are not instantiated yet.
       </Slide>
 
       <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-⬅
-var shout = 'Arrr!!';`
-        }</Code>
-        <Table>
-          <tr>
-            <td>pirate</td>
-            <td>'Captain Hook'</td>
-          </tr>
-          <tr>
-            <td>shout</td>
-            <td>'Arrr!!'</td>
-          </tr>
-        </Table>
+        <Code>{`
+          const pirate = 'Captain Hook';
+          shout(); ⬅ // Arrr!!
+
+          function shout() {
+            return 'Arrr!!';
+          }
+        `}</Code>
+        <Table rows={[
+          ['pirate', 'Captain Hook'],
+          ['shout', '[Function]']
+        ]}/>
       </Slide>
 
       <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-⬅
-function shout() {
-  return 'Arrr!!';
-}`
-        }</Code>
-        <Table>
-          <tr>
-            <td>pirate</td>
-            <td>'Captain Hook'</td>
-          </tr>
-          <tr>
-            <td>shout</td>
-            <td>[Function]</td>
-          </tr>
-        </Table>
+        <Code>{`
+          const pirate = 'Captain Hook';
+          shout(); ⬅
+
+          function shout() {
+            const message = pirate + ' says: Arrr!!';
+            return message;
+          }
+        `}</Code>
+        <Table rows={[
+          ['pirate', 'Captain Hook'],
+          ['shout', '[Function]']
+        ]}/>
       </Slide>
 
       <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-shout(); ⬅ // Arrr!!
+        <Code>{`
+          const pirate = 'Captain Hook';
+          shout();
 
-function shout() {
-  return 'Arrr!!';
-}`
-        }</Code>
-        <Table>
-          <tr>
-            <td>pirate</td>
-            <td>'Captain Hook'</td>
-          </tr>
-          <tr>
-            <td>shout</td>
-            <td>[Function]</td>
-          </tr>
-        </Table>
+          function shout() {
+            ⬅
+            const message = pirate + ' says: Arrr!!';
+            return message;
+          }
+        `}</Code>
+        <Table rows={[
+          ['message', '❌'],
+          ['parent scope', '*']]}/>
       </Slide>
 
       <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-shout(); ⬅ // Arrr!!
+        <Code>{`
+          const pirate = 'Captain Hook';
+          shout();
 
-function shout() {
-  const message = pirate + ' says: Arrr!!';
-  return message;
-}`
-        }</Code>
-        <Table>
-          <tr>
-            <td>pirate</td>
-            <td>'Captain Hook'</td>
-          </tr>
-          <tr>
-            <td>shout</td>
-            <td>[Function]</td>
-          </tr>
-        </Table>
+          function shout() {
+            const message = pirate ⬅ + ' says: Arrr!!';
+            return message;
+          }
+        `}</Code>
+        <Table rows={[
+          ['message', '❌'],
+          ['parent scope', '*'],
+          ['*pirate', 'Captain Hook'],
+          ['*shout', '[Function]']
+        ]}/>
       </Slide>
 
-      <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-shout();
-
-function shout() {
-  ⬅
-  const message = pirate + ' says: Arrr!!';
-  return message;
-}`
-        }</Code>
-        <Table>
-          <tr>
-            <td>message</td>
-            <td>❌</td>
-          </tr>
-          <tr>
-            <td>parent scope</td>
-            <td>*</td>
-          </tr>
-        </Table>
+      <Slide>
+        Scopes inherit from their parent scope.
       </Slide>
 
-      <Slide dark>
-        <Code>{
-`const pirate = 'Captain Hook';
-shout();
+      <Slide>
+        <Exercise>Scoping like its 2016</Exercise>
+      </Slide>
 
-function shout() {
-  const message = pirate ⬅ + ' says: Arrr!!';
-  return message;
-}`
-        }</Code>
-        <Table>
-          <tr>
-            <td>message</td>
-            <td>❌</td>
-          </tr>
-          <tr>
-            <td>parent scope</td>
-            <td>*</td>
-          </tr>
+      <Slide>
+        Vars are function scoped, let and const are block scoped.
+      </Slide>
 
-          <tr>
-            <td>*pirate</td>
-            <td>'Captain Hook'</td>
-          </tr>
-          <tr>
-            <td>*shout</td>
-            <td>[Function]</td>
-          </tr>
-        </Table>
+      <Slide>
+        <Title>Context 🌍</Title>
+      </Slide>
+
+      <Slide>
+        context !== scope
+      </Slide>
+
+      <Slide>
+        The context is an object determined by how a function is called.
+      </Slide>
+
+      <Slide>
+        <Exercise>Building a rocket 🚀</Exercise>
+      </Slide>
+
+      <Slide>
+        When using <i>this</i>, know how the function is executed.
+      </Slide>
+
+      <Slide>
+        <Exercise>Getting classy 👠</Exercise>
+      </Slide>
+
+      <Slide>
+        In Javscript, classes are fancy functions that have to be invoked using new.
       </Slide>
     </Slides>
   )

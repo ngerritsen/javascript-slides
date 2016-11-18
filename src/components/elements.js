@@ -15,12 +15,41 @@ export function Secondary({ children }) {
 
 export function Code({ children, language = 'javascript' }) {
   return <Highlight className={language}>
-    {children}
+    {dedent(children)}
   </Highlight>
 }
 
-export function Table({ children }) {
+export function Table({ rows }) {
   return <table className="element-table">
-    <tbody>{children}</tbody>
+    <tbody>
+      {rows.map(row =>
+        <tr>
+          {row.map(cell => <td>{cell}</td>)}
+        </tr>
+      )}
+    </tbody>
   </table>
+}
+
+export function Exercise({ children }) {
+  return <p className="element-exercise">
+    {children}
+  </p>
+}
+
+function dedent(code) {
+  const lines = code.split('\n');
+  const { spaces: baseIndentation } = lines[1]
+    .split('')
+    .reduce((result, char) => {
+      const isSpace = char === ' ';
+      return {
+        spaces: isSpace && !result.done ? result.spaces + 1 : result.spaces,
+        done: result.done || !isSpace
+      }
+    }, { done: false, spaces: 0 })
+
+    return lines
+      .map(line => line.slice(baseIndentation, line.length))
+      .join('\n')
 }

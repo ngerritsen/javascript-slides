@@ -21,3 +21,13 @@
     border: 2px solid $mono-3;
   }
 }
+
+.element-exercise {
+  &:before {
+    content: '🔔';
+    display: block;
+    position: relative;
+    font-size: 1.2em;
+    top: -1.5em;
+  }
+}
