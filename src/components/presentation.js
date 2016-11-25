@@ -34,25 +34,12 @@ function Presentation(props) {
 
       <Slide dark>
         <Code>{`
-          ⬅
-          const pirate = 'Captain Hook';
-          const shout = 'Arrr!!';
-        `}</Code>
-        <Table rows={[
-          ['pirate', '❌'],
-          ['shout', '❌']
-        ]}/>
-      </Slide>
-
-      <Slide dark>
-        <Code>{`
           const pirate = 'Captain Hook';
           ⬅
           const shout = 'Arrr!!';
         `}</Code>
         <Table rows={[
-          ['pirate', 'Captain Hook'],
-          ['shout', '❌']
+          ['pirate', 'Captain Hook']
         ]}/>
       </Slide>
 
@@ -73,28 +60,13 @@ function Presentation(props) {
       </Slide>
 
       <Slide>
-        Everything hoisted, but <i>const</i>, <i>let</i> and <i>class</i> are not instantiated yet.
+        Only <i>function</i> hoisting is useful. <i>var</i> is hoisted but not assigned.
       </Slide>
 
       <Slide dark>
         <Code>{`
           const pirate = 'Captain Hook';
-          shout(); ⬅ // Arrr!!
-
-          function shout() {
-            return 'Arrr!!';
-          }
-        `}</Code>
-        <Table rows={[
-          ['pirate', 'Captain Hook'],
-          ['shout', '[Function]']
-        ]}/>
-      </Slide>
-
-      <Slide dark>
-        <Code>{`
-          const pirate = 'Captain Hook';
-          shout(); ⬅
+          const pirateMessage = shout(); ⬅
 
           function shout() {
             const message = pirate + ' says: Arrr!!';
@@ -110,23 +82,7 @@ function Presentation(props) {
       <Slide dark>
         <Code>{`
           const pirate = 'Captain Hook';
-          shout();
-
-          function shout() {
-            ⬅
-            const message = pirate + ' says: Arrr!!';
-            return message;
-          }
-        `}</Code>
-        <Table rows={[
-          ['message', '❌'],
-          ['parent scope', '*']]}/>
-      </Slide>
-
-      <Slide dark>
-        <Code>{`
-          const pirate = 'Captain Hook';
-          shout();
+          const pirateMessage = shout();
 
           function shout() {
             const message = pirate ⬅ + ' says: Arrr!!';
@@ -134,10 +90,45 @@ function Presentation(props) {
           }
         `}</Code>
         <Table rows={[
-          ['message', '❌'],
           ['parent scope', '*'],
           ['*pirate', 'Captain Hook'],
           ['*shout', '[Function]']
+        ]}/>
+      </Slide>
+
+      <Slide dark>
+        <Code>{`
+          const pirate = 'Captain Hook';
+          const pirateMessage = shout();
+
+          function shout() {
+            const message = pirate + ' says: Arrr!!';
+            return message; ⬅
+          }
+        `}</Code>
+        <Table rows={[
+          ['message', 'Captain hook says: Arrr!!'],
+          ['parent scope', '*'],
+          ['*pirate', 'Captain Hook'],
+          ['*shout', '[Function]']
+        ]}/>
+      </Slide>
+
+      <Slide dark>
+        <Code>{`
+          const pirate = 'Captain Hook';
+          const pirateMessage = shout();
+          ⬅
+
+          function shout() {
+            const message = pirate + ' says: Arrr!!';
+            return message;
+          }
+        `}</Code>
+        <Table rows={[
+          ['pirateMessage', 'Captain hook says: Arrr!!'],
+          ['pirate', 'Captain Hook'],
+          ['shout', '[Function]']
         ]}/>
       </Slide>
 
@@ -150,7 +141,15 @@ function Presentation(props) {
       </Slide>
 
       <Slide>
-        Vars are function scoped, let and const are block scoped.
+        <i>vars</i> are function scoped, <i>let</i> and <i>const</i> are block scoped.
+      </Slide>
+
+      <Slide>
+        <Exercise>Filescope</Exercise>
+      </Slide>
+
+      <Slide>
+        Node.js has a file scope, the browser has IIFY's instead.
       </Slide>
 
       <Slide>
@@ -166,11 +165,27 @@ function Presentation(props) {
       </Slide>
 
       <Slide>
-        <Exercise>Building a rocket 🚀</Exercise>
+        <Exercise>Creating a rocket 🚀</Exercise>
       </Slide>
 
       <Slide>
-        When using <i>this</i>, know how the function is executed.
+        Take care when using <i>this</i>, the caller has control over what it is.
+      </Slide>
+
+      <Slide>
+        <Exercise>Constructing a rocket 🚀</Exercise>
+      </Slide>
+
+      <Slide>
+        Constructor functions create objects by using <i>context</i>.
+      </Slide>
+
+      <Slide>
+        <Exercise>Prototyping a rocket 🚀</Exercise>
+      </Slide>
+
+      <Slide>
+        Context inherits from the <i>prototype</i>.
       </Slide>
 
       <Slide>
@@ -178,7 +193,51 @@ function Presentation(props) {
       </Slide>
 
       <Slide>
-        In Javscript, classes are fancy functions that have to be invoked using new.
+        In Javscript, classes are <i>fancy</i>, "better" constructor functions.
+      </Slide>
+
+      <Slide>
+        <Code>{`
+          class MyModule {
+            constructor() {
+              this.message = 'Hello world!';
+            }
+
+            _init() {
+              this._element.addEventListener(this._onClick)
+            }
+
+            _onClick() {
+              alert(this.message)
+            }
+          }
+        `}</Code>
+      </Slide>
+
+      <Slide>
+        <Code>{`
+          class MyModule {
+            constructor() {
+              this.message = 'Hello world!';
+            }
+
+            _init() {
+              this._element.addEventListener(this._onClick.bind(this))
+            }
+
+            _onClick() {
+              alert(this.message)
+            }
+          }
+        `}</Code>
+      </Slide>
+
+      <Slide>
+        <Exercise>Rockets without context 🚀</Exercise>
+      </Slide>
+
+      <Slide>
+        Always weight the benefits of using context against the downsides.
       </Slide>
     </Slides>
   )
