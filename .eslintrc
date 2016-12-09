@@ -19,8 +19,8 @@
     }
   },
   "rules": {
-    "semi": [2, "never"],
     "no-magic-numbers": 0,
+    "operator-linebreak": [2, "after"],
 
     /**
      * React & JSX

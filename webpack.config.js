@@ -1,12 +1,16 @@
-const webpack = require('webpack')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const config = {
-  entry: './src/main.js',
+  entry: [
+    'babel-polyfill',
+    'whatwg-fetch',
+    './client/main.js'
+  ],
   output: {
     path: 'public',
-    publicPath: '/',
+    publicPath: '/public',
     filename: 'bundle.js'
   },
   module: {
@@ -22,10 +26,6 @@ const config = {
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract('css!sass')
-      },
-      {
-        test: /\.md$/,
-        loader: 'raw'
       }
     ]
   },
@@ -33,13 +33,22 @@ const config = {
     new HtmlWebpackPlugin({
       title: 'Javascript slides',
       filename: 'index.html',
-      template: './src/index.html',
+      template: './client/index.html',
       inject: true,
       hash: true
     }),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin('style.css')
   ]
+};
+
+if (process.env.NODE_ENV === 'development') {
+  config.watch = true;
+  config.devtool = 'source-map';
 }
 
-module.exports = config
+if (process.env.NODE_ENV === 'production') {
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+}
+
+module.exports = config;

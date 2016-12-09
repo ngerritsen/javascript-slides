@@ -1,0 +1,26 @@
+@import 'colors';
+
+.presentations {
+  text-align: center;
+  margin-top: 10vh;
+}
+
+.presentations__item {
+  font-size: 2vw;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 1vw;
+}
+
+.presentations__link,
+.presentations__link:visited {
+  color: lighten($text, 10%);
+  text-decoration: none;
+
+  &:hover,
+  &:active,
+  &:focus {
+    color: lighten($text, 10%);
+    text-decoration: underline;
+  }
+}
