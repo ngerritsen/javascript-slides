@@ -5,6 +5,8 @@ import { bindActionCreators } from 'redux';
 import { fetchPresentation } from '../actions';
 import Slides from './slides';
 
+import '../styles/presentation.scss';
+
 class Presentation extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,7 @@ class Presentation extends Component {
       return <Slides slides={slides} currentSlide={currentSlide}/>;
     }
 
-    return <p>Loading "{presentation}"...</p>;
+    return <p className="presentation__loading">Loading "{presentation}"...</p>;
   }
 }
 

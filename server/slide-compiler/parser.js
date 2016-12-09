@@ -1,4 +1,5 @@
-const { CODE, EMPTY, SLIDE, TEXT, NORMAL, HIGHLIGHTED, TITLE, SECONDARY } = require('../../shared/constants');
+const constants = require('../../shared/constants');
+const { CODE, EMPTY, SLIDE, TEXT, NORMAL, HIGHLIGHTED, TITLE, SECONDARY, LIST_ITEM, LIST } = constants;
 
 function parser(statements) {
   return statements
@@ -13,41 +14,34 @@ function parseSlide(slide) {
 }
 
 function parseElements(values) {
-  return values.reduce((state, statement) => { // eslint-disable-line complexity, max-statements
-    if (state.inCode) {
-      return parseInCode(state, statement);
+  return values.reduce((parsedElements, statement) => { // eslint-disable-line complexity, max-statements
+    const lastElement = parsedElements[parsedElements.length - 1];
+
+    if (lastElement.type === CODE) {
+      return addValueToLastCodeStatement(parsedElements, statement);
     }
 
-    if (statement.type === CODE) {
-      return {
-        parsedElements: [...state.parsedElements, statement],
-        inCode: true
-      };
+    if (lastElement.type === LIST && statement.type === LIST_ITEM) {
+      return addItemToLastListStatement(parsedElements, statement);
+    }
+
+    if (statement.type === LIST_ITEM) {
+      return [
+        ...parsedElements,
+        { type: LIST, value: [statement], properties: {} }
+      ]
     }
 
     if (statement.type === EMPTY) {
-      return state;
+      return parsedElements;
     }
 
     if (statement.type === TEXT || statement.type === TITLE || statement.type === SECONDARY) {
-      return assign(state, {
-        parsedElements: [...state.parsedElements, parseTextStatement(statement)]
-      });
+      return [...parsedElements, parseTextStatement(statement)];
     }
 
-    return assign(state, {
-      parsedElements: [...state.parsedElements, statement]
-    });
-  }, {
-    parsedElements: [],
-    inCode: false
-  }).parsedElements;
-}
-
-function parseInCode(state, statement) {
-  return statement.type === CODE ?
-    assign(state, { inCode: false }) :
-    assign(state, { parsedElements: addValueToLastCodeStatement(state.parsedElements, statement) });
+    return [...parsedElements, statement];
+  }, []);
 }
 
 function extractSlides(slides, statement) {
@@ -59,6 +53,12 @@ function extractSlides(slides, statement) {
 function addValueToLastCodeStatement(values, statement) {
   return updateLast(values, codeStatement => assign(codeStatement, {
     value: codeStatement.value + '\n' + (statement.value || '')
+  }));
+}
+
+function addItemToLastListStatement(values, statement) {
+  return updateLast(values, list => assign(list, {
+    value: [...list.value, statement]
   }));
 }
 

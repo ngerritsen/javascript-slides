@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Highlight from 'react-highlight';
-import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED } from '../../shared/constants';
+import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED, LIST } from '../../shared/constants';
 
 import '../styles/elements.scss';
 
@@ -11,6 +11,7 @@ export default {
   [TEXT]: Text,
   [EMPTY]: Text,
   [SECONDARY]: Secondary,
+  [LIST]: List,
   [CODE]: Code
 };
 
@@ -30,6 +31,14 @@ function Code({ value, language }) {
   return <Highlight className={language}>
     {value}
   </Highlight>;
+}
+
+function List({ value }) {
+  return <ul className="element-list">
+    {value.map((listItem, index) =>
+      <li className="element-list__item" key={index}>{listItem}</li>
+    )}
+  </ul>;
 }
 
 export function Table({ rows }) {

@@ -1,4 +1,4 @@
-const { TITLE, TEXT, CODE, EMPTY, SLIDE, SECONDARY } = require('../../shared/constants');
+const { TITLE, TEXT, CODE, EMPTY, SLIDE, SECONDARY, LIST_ITEM } = require('../../shared/constants');
 
 const DARK = 'dark';
 
@@ -15,6 +15,11 @@ function lexer(source) {
     if (line.match(/^#\s.*/)) {
       const value = getAfter(line, 2);
       return statement(TITLE, value);
+    }
+
+    if (line.match(/^-\s.*/)) {
+      const value = getAfter(line, 2);
+      return statement(LIST_ITEM, value);
     }
 
     if (line.match(/^##\s.*/)) {
