@@ -2,27 +2,28 @@
 
 import React from 'react';
 import Highlight from 'react-highlight';
-import { TITLE, TEXT, CODE, SECONDARY } from '../../shared/constants';
+import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED } from '../../shared/constants';
 
 import '../styles/elements.scss';
 
 export default {
   [TITLE]: Title,
   [TEXT]: Text,
+  [EMPTY]: Text,
   [SECONDARY]: Secondary,
   [CODE]: Code
 };
 
 function Title({ value }) {
-  return <h1 className="element-title">{value}</h1>;
+  return <h1 className="element-title">{formatText(value)}</h1>;
 }
 
 function Text({ value }) {
-  return <p>{value}</p>;
+  return <p>{formatText(value)}</p>;
 }
 
 function Secondary({ value }) {
-  return <p className="element-secondary">{value}</p>;
+  return <p className="element-secondary">{formatText(value)}</p>;
 }
 
 function Code({ value, language }) {
@@ -45,8 +46,14 @@ export function Table({ rows }) {
   </table>;
 }
 
-export function Exercise({ children }) {
-  return <p className="element-exercise">
-    {children}
-  </p>;
+function formatText(text) {
+  if (typeof text === 'string') {
+    return text;
+  }
+
+  return text.map(({ format, value }, index) =>
+    format === HIGHLIGHTED ?
+      <span className="element-highlight" key={index}>{value}</span> :
+      <span key={index}>{value}</span>
+  );
 }

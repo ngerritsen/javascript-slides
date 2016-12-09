@@ -1,4 +1,4 @@
-const { CODE, EMPTY, SLIDE } = require('../../shared/constants');
+const { CODE, EMPTY, SLIDE, TEXT, NORMAL, HIGHLIGHTED, TITLE, SECONDARY } = require('../../shared/constants');
 
 function parser(statements) {
   return statements
@@ -13,7 +13,7 @@ function parseSlide(slide) {
 }
 
 function parseElements(values) {
-  return values.reduce((state, statement) => {
+  return values.reduce((state, statement) => { // eslint-disable-line complexity, max-statements
     if (state.inCode) {
       return parseInCode(state, statement);
     }
@@ -27,6 +27,12 @@ function parseElements(values) {
 
     if (statement.type === EMPTY) {
       return state;
+    }
+
+    if (statement.type === TEXT || statement.type === TITLE || statement.type === SECONDARY) {
+      return assign(state, {
+        parsedElements: [...state.parsedElements, parseTextStatement(statement)]
+      });
     }
 
     return assign(state, {
@@ -52,7 +58,7 @@ function extractSlides(slides, statement) {
 
 function addValueToLastCodeStatement(values, statement) {
   return updateLast(values, codeStatement => assign(codeStatement, {
-    value: codeStatement.value + '\n' + statement.value
+    value: codeStatement.value + '\n' + (statement.value || '')
   }));
 }
 
@@ -68,6 +74,17 @@ function updateLast(array, updater) {
       updater(item) :
       item;
   });
+}
+
+function parseTextStatement(statement) {
+  const parsedValue = statement.value
+    .split('_')
+    .map((value, index) => ({
+      format: index % 2 === 0 ? NORMAL : HIGHLIGHTED,
+      value
+    }));
+
+  return assign(statement, { value: parsedValue });
 }
 
 function assign(...objects) {

@@ -9,6 +9,10 @@
   font-size: 1.2em;
 }
 
+.element-highlight {
+  font-style: italic;
+}
+
 .element-table,
 .element-table th,
 .element-table td {
@@ -19,15 +23,5 @@
 
   .slide--dark & {
     border: 2px solid $mono-3;
-  }
-}
-
-.element-exercise {
-  &:before {
-    content: '🔔';
-    display: block;
-    position: relative;
-    font-size: 1.2em;
-    top: -1.5em;
   }
 }
