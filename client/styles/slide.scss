@@ -1,21 +1,17 @@
 @import 'colors';
 
 .slide {
-  display: none;
+  display: flex;
   background-color: $white;
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  line-height: 1.2;
+  line-height: 1.3;
   font-size: 2.8vw;
   text-align: center;
   justify-content: center;
   align-content: center;
   align-items: center;
-}
-
-.slide--active {
-  display: flex;
 }
 
 .slide--dark {

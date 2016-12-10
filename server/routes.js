@@ -8,13 +8,19 @@ function routes(app) {
   app.get('/api/presentations', (req, res) => {
     presentationRepository.getAll()
       .then(result => res.json(result))
-      .catch(error => res.status(500).send(error.message));
+      .catch(error => {
+        console.error(error.stack); // eslint-disable-line no-console
+        res.status(500).send(error.message);
+      });
   });
 
   app.get('/api/presentations/:presentation', (req, res) => {
     presentationRepository.get(req.params.presentation)
       .then(result => res.json(result))
-      .catch(error => res.status(404).send(error.message));
+      .catch(error => {
+        console.error(error.stack); // eslint-disable-line no-console
+        res.status(500).send(error.message);
+      });
   });
 
   app.get('*', (req, res) => {

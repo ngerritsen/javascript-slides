@@ -36,7 +36,7 @@ function Code({ value, language }) {
 function List({ value }) {
   return <ul className="element-list">
     {value.map((listItem, index) =>
-      <li className="element-list__item" key={index}>{listItem}</li>
+      <li className="element-list__item" key={index}>{listItem.value}</li>
     )}
   </ul>;
 }

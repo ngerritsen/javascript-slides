@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { fetchPresentation } from '../actions';
-import Slides from './slides';
+import Slide from './slide';
 
 import '../styles/presentation.scss';
 
@@ -17,7 +17,8 @@ class Presentation extends Component {
     const { slides, currentSlide, presentation } = this.props;
 
     if (slides) {
-      return <Slides slides={slides} currentSlide={currentSlide}/>;
+      const slide = slides[currentSlide];
+      return <Slide elements={slide.value} {...slide.properties}/>;
     }
 
     return <p className="presentation__loading">Loading "{presentation}"...</p>;

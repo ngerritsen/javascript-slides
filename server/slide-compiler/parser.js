@@ -1,5 +1,6 @@
 const constants = require('../../shared/constants');
 const { CODE, EMPTY, SLIDE, TEXT, NORMAL, HIGHLIGHTED, TITLE, SECONDARY, LIST_ITEM, LIST } = constants;
+const typesWithFormatting = [TEXT, TITLE, SECONDARY];
 
 function parser(statements) {
   return statements
@@ -14,40 +15,66 @@ function parseSlide(slide) {
 }
 
 function parseElements(values) {
-  return values.reduce((parsedElements, statement) => { // eslint-disable-line complexity, max-statements
-    const lastElement = parsedElements[parsedElements.length - 1];
-
-    if (lastElement.type === CODE) {
-      return addValueToLastCodeStatement(parsedElements, statement);
-    }
-
-    if (lastElement.type === LIST && statement.type === LIST_ITEM) {
-      return addItemToLastListStatement(parsedElements, statement);
-    }
-
-    if (statement.type === LIST_ITEM) {
-      return [
-        ...parsedElements,
-        { type: LIST, value: [statement], properties: {} }
-      ]
-    }
-
-    if (statement.type === EMPTY) {
-      return parsedElements;
-    }
-
-    if (statement.type === TEXT || statement.type === TITLE || statement.type === SECONDARY) {
-      return [...parsedElements, parseTextStatement(statement)];
-    }
-
-    return [...parsedElements, statement];
+  return values.reduce((elements, statement) => {
+    return parseElement(elements, statement, getLast(elements));
   }, []);
 }
 
+function parseElement(elements, statement, lastElement = {}) {
+  if (isInCodeMode(lastElement)) {
+    return parseCodeMode(elements, statement);
+  }
+
+  if (statement.type === EMPTY) {
+    return elements;
+  }
+
+  if (statement.type === LIST_ITEM) {
+    return parseListItem(elements, statement, lastElement);
+  }
+
+  return parseRegularStatement(elements, statement);
+}
+
+function parseCodeMode(elements, statement) {
+  if (statement.type === CODE) {
+    return updateLast(elements, codeElement => assign(codeElement, { done: true }));
+  }
+
+  return addValueToLastCodeStatement(elements, statement);
+}
+
+function parseListItem(elements, statement, lastElement) {
+  if (lastElement.type === LIST) {
+    return addItemToLastListStatement(elements, statement);
+  }
+
+  const list = { type: LIST, value: [statement], properties: {} };
+  return [...elements, list];
+}
+
+function parseRegularStatement(elements, statement) {
+  if (typesWithFormatting.includes(statement.type)) {
+    return [...elements, parseTextStatement(statement)];
+  }
+
+  return [...elements, statement];
+}
+
+function getLast(array) {
+  return array[array.length - 1];
+}
+
+function isInCodeMode(lastElement) {
+  return lastElement.type === CODE && !lastElement.done;
+}
+
 function extractSlides(slides, statement) {
-  return statement.type === SLIDE ?
-    [...slides, statement] :
-    addStatementToLastSlide(slides, statement);
+  if (statement.type === SLIDE) {
+    return [...slides, statement];
+  }
+
+  return addStatementToLastSlide(slides, statement);
 }
 
 function addValueToLastCodeStatement(values, statement) {
@@ -70,9 +97,8 @@ function addStatementToLastSlide(slides, statement) {
 
 function updateLast(array, updater) {
   return array.map((item, index) => {
-    return index === array.length - 1 ?
-      updater(item) :
-      item;
+    const isLast = index === array.length - 1;
+    return isLast ? updater(item) : item;
   });
 }
 
