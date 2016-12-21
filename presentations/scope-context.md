@@ -155,8 +155,10 @@ In Javscript, classes are _fancy_, "better" constructor functions.
 === dark
 ```javascript
 class MyModule {
-  constructor() {
+  constructor(element) {
+    this._element = element;
     this.message = 'Hello world!';
+    this._init();
   }
 
   _init() {
@@ -173,8 +175,10 @@ class MyModule {
 === dark
 ```javascript
 class MyModule {
-  constructor() {
+  constructor(element) {
+    this._element = element;
     this.message = 'Hello world!';
+    this._init();
   }
 
   _init() {

@@ -2,7 +2,7 @@
 
 pre {
   text-align: left;
-  font-size: 2.4vw;
+  font-size: 2.1vw;
 }
 
 .hljs {
@@ -11,7 +11,12 @@ pre {
   font-weigt: 400;
 }
 
-.hljs-title {
+.hljs-selector-tag {
+  color: $hue-5;
+}
+
+.hljs-title,
+.hljs-selector-id {
   color: $hue-2;
 }
 
@@ -23,7 +28,8 @@ pre {
   color: $hue-4;
 }
 
-.hljs-number {
+.hljs-number,
+.hljs-selector-class {
   color: $hue-6;
 }
 

@@ -34,6 +34,7 @@ const config = {
       title: 'Javascript slides',
       filename: 'index.html',
       template: './client/index.html',
+      favicon: './client/favicon.png',
       inject: true,
       hash: true
     }),
