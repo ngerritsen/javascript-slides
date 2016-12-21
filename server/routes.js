@@ -4,6 +4,7 @@ const presentationRepository = require('./presentation-repository');
 
 function routes(app) {
   app.use('/public', express.static('public'));
+  app.use('/examples', express.static('examples'));
 
   app.get('/api/presentations', (req, res) => {
     presentationRepository.getAll()

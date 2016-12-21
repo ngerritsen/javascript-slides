@@ -8,5 +8,6 @@ module.exports = {
   NORMAL: 'NORMAL',
   HIGHLIGHTED: 'HIGHLIGHTED',
   LIST_ITEM: 'LIST_ITEM',
-  LIST: 'LIST'
+  LIST: 'LIST',
+  LINK: 'LINK'
 };

@@ -13,6 +13,19 @@
   font-style: italic;
 }
 
+.element-link,
+.element-link:visited{
+  color: $hue-2;
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $hue-2;
+    text-decoration: underline;
+  }
+}
+
 .element-table,
 .element-table th,
 .element-table td {

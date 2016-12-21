@@ -57,12 +57,12 @@ Example 🔔
 
 ===
 Google: '_css specificity_'
-## https://www.smashingmagazine.com/2010/04/css-specificity-and-inheritance
+[www.smashingmagazine.com/2010/04/css-specificity-and-inheritance](https://www.smashingmagazine.com/2010/04/css-specificity-and-inheritance)
 
 ===
 Google: '_specificity calculator_'
-## https://specificity.keegan.st
+[specificity.keegan.st](https://specificity.keegan.st)
 
 ===
 Google: '_bem_'
-## http://getbem.com
+[getbem.com](http://getbem.com)

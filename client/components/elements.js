@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Highlight from 'react-highlight';
-import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED, LIST } from '../../shared/constants';
+import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED, LIST, LINK } from '../../shared/constants';
 
 import '../styles/elements.scss';
 
@@ -12,7 +12,8 @@ export default {
   [EMPTY]: Text,
   [SECONDARY]: Secondary,
   [LIST]: List,
-  [CODE]: Code
+  [CODE]: Code,
+  [LINK]: Link
 };
 
 function Title({ value }) {
@@ -21,6 +22,10 @@ function Title({ value }) {
 
 function Text({ value }) {
   return <p>{formatText(value)}</p>;
+}
+
+function Link({ value, link }) {
+  return <a href={link} className="element-link">{value}</a>;
 }
 
 function Secondary({ value }) {

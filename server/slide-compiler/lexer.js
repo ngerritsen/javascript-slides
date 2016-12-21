@@ -1,4 +1,4 @@
-const { TITLE, TEXT, CODE, EMPTY, SLIDE, SECONDARY, LIST_ITEM } = require('../../shared/constants');
+const { TITLE, TEXT, CODE, EMPTY, SLIDE, SECONDARY, LIST_ITEM, LINK } = require('../../shared/constants');
 
 const DARK = 'dark';
 
@@ -25,6 +25,13 @@ function lexer(source) {
     if (line.match(/^##\s.*/)) {
       const value = getAfter(line, 3);
       return statement(SECONDARY, value);
+    }
+
+    // eslint-disable-next-line no-useless-escape
+    const [, value, link] = line.match(/^\[(.*)\]\((.*)\)/) || [];
+
+    if (value && link) {
+      return statement(LINK, value, { link });
     }
 
     if (line.match(/^```/)) {
