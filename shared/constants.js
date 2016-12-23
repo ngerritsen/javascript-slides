@@ -10,4 +10,4 @@ module.exports = {
   LIST_ITEM: 'LIST_ITEM',
   LIST: 'LIST',
   LINK: 'LINK'
-};
+}

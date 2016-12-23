@@ -1,10 +1,10 @@
 /* eslint-disable react/no-multi-comp, react/prop-types */
 
-import React from 'react';
-import Highlight from 'react-highlight';
-import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED, LIST, LINK } from '../../shared/constants';
+import React from 'react'
+import Highlight from 'react-highlight'
+import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED, LIST, LINK } from '../../shared/constants'
 
-import '../styles/elements.scss';
+import '../styles/elements.scss'
 
 export default {
   [TITLE]: Title,
@@ -14,28 +14,28 @@ export default {
   [LIST]: List,
   [CODE]: Code,
   [LINK]: Link
-};
+}
 
 function Title({ value }) {
-  return <h1 className="element-title">{formatText(value)}</h1>;
+  return <h1 className="element-title">{formatText(value)}</h1>
 }
 
 function Text({ value }) {
-  return <p>{formatText(value)}</p>;
+  return <p>{formatText(value)}</p>
 }
 
 function Link({ value, link }) {
-  return <a href={link} className="element-link">{value}</a>;
+  return <a href={link} className="element-link">{value}</a>
 }
 
 function Secondary({ value }) {
-  return <p className="element-secondary">{formatText(value)}</p>;
+  return <p className="element-secondary">{formatText(value)}</p>
 }
 
 function Code({ value, language }) {
   return <Highlight className={language}>
     {value}
-  </Highlight>;
+  </Highlight>
 }
 
 function List({ value }) {
@@ -43,7 +43,7 @@ function List({ value }) {
     {value.map((listItem, index) =>
       <li className="element-list__item" key={index}>{listItem.value}</li>
     )}
-  </ul>;
+  </ul>
 }
 
 export function Table({ rows }) {
@@ -57,17 +57,17 @@ export function Table({ rows }) {
         </tr>
       )}
     </tbody>
-  </table>;
+  </table>
 }
 
 function formatText(text) {
   if (typeof text === 'string') {
-    return text;
+    return text
   }
 
   return text.map(({ format, value }, index) =>
     format === HIGHLIGHTED ?
       <span className="element-highlight" key={index}>{value}</span> :
       <span key={index}>{value}</span>
-  );
+  )
 }

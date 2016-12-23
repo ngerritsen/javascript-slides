@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes } from 'react'
 
-import '../styles/slide.scss';
-import elementsMap from './elements';
+import '../styles/slide.scss'
+import elementsMap from './elements'
 
 function Slide({ elements, active, dark }) {
   return (
@@ -10,18 +10,18 @@ function Slide({ elements, active, dark }) {
     >
       <div className="slide__content">
         {elements.map((element, index) => {
-          const Element = elementsMap[element.type];
-          return <Element key={index} value={element.value} {...element.properties}/>;
+          const Element = elementsMap[element.type]
+          return <Element key={index} value={element.value} {...element.properties}/>
         })}
       </div>
     </div>
-  );
+  )
 }
 
 Slide.propTypes = {
   active: PropTypes.bool,
   dark: PropTypes.bool,
   elements: PropTypes.arrayOf(PropTypes.object).isRequired
-};
+}
 
-export default Slide;
+export default Slide

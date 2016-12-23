@@ -2,8 +2,13 @@
   font-size: 2rem;
 }
 
+.alt-error.message {
+  font-size: 3rem;
+  color: red;
+}
+
 @media screen and (min-width: 700px) {
   .message {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 }

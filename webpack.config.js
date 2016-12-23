@@ -1,6 +1,6 @@
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const config = {
   entry: [
@@ -41,15 +41,15 @@ const config = {
     new webpack.optimize.OccurrenceOrderPlugin(),
     new ExtractTextPlugin('style.css')
   ]
-};
+}
 
 if (process.env.NODE_ENV === 'development') {
-  config.watch = true;
-  config.devtool = 'source-map';
+  config.watch = true
+  config.devtool = 'source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin());
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin())
 }
 
-module.exports = config;
+module.exports = config

@@ -1,8 +1,8 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import React, { PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
-import '../styles/presentations.scss';
+import '../styles/presentations.scss'
 
 function Presentations({ presentations }) {
   return (
@@ -15,15 +15,15 @@ function Presentations({ presentations }) {
         </li>
       )}
     </ul>
-  );
+  )
 }
 
 Presentations.propTypes = {
   presentations: PropTypes.array.isRequired
-};
-
-function mapStateToProps({ presentations }) {
-  return { presentations };
 }
 
-export default connect(mapStateToProps)(Presentations);
+function mapStateToProps({ presentations }) {
+  return { presentations }
+}
+
+export default connect(mapStateToProps)(Presentations)
