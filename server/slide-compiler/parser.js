@@ -1,5 +1,5 @@
 const constants = require('../../shared/constants')
-const { CODE, EMPTY, SLIDE, TEXT, NORMAL, HIGHLIGHTED, TITLE, SECONDARY, LIST_ITEM, LIST } = constants
+const { CODE, EMPTY, SLIDE, TEXT, TABLE_ROW, TABLE, NORMAL, HIGHLIGHTED, TITLE, SECONDARY, LIST_ITEM, LIST } = constants
 const typesWithFormatting = [TEXT, TITLE, SECONDARY]
 
 function parser(statements) {
@@ -20,9 +20,13 @@ function parseElements(values) {
   }, [])
 }
 
-function parseElement(elements, statement, lastElement = {}) {
+function parseElement(elements, statement, lastElement = {}) { // eslint-disable-line max-statements
   if (isInCodeMode(lastElement)) {
     return parseCodeMode(elements, statement)
+  }
+
+  if (statement.type === TABLE_ROW) {
+    return parseTableRow(elements, statement, lastElement)
   }
 
   if (statement.type === EMPTY) {
@@ -34,6 +38,24 @@ function parseElement(elements, statement, lastElement = {}) {
   }
 
   return parseRegularStatement(elements, statement)
+}
+
+function parseTableRow(elements, statement, lastElement) {
+  if (lastElement.type === TABLE) {
+    return updateTable(elements, statement)
+  }
+
+  return [...elements, createTableElement(statement)]
+}
+
+function updateTable(elements, statement) {
+  if (statement.properties.divider) {
+    return updateLast(elements, tableElement => assign(tableElement, {
+      properties: assign(tableElement.properties, { hasHeading: true })
+    }))
+  }
+
+  return updateLast(elements, tableElement => updateTableElement(tableElement, statement))
 }
 
 function parseCodeMode(elements, statement) {
@@ -111,6 +133,23 @@ function parseTextStatement(statement) {
     }))
 
   return assign(statement, { value: parsedValue })
+}
+
+function updateTableElement(tableElement, statement) {
+  return assign(tableElement, {
+    properties: assign(tableElement.properties, {
+      rows: [...tableElement.properties.rows, statement.properties.cells]
+    })
+  })
+}
+
+function createTableElement(statement) {
+  return {
+    type: TABLE,
+    properties: {
+      rows: [statement.properties.cells]
+    }
+  }
 }
 
 function assign(...objects) {

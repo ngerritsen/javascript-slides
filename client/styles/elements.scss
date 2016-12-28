@@ -39,6 +39,10 @@
   }
 }
 
+.element-table th {
+  border-bottom: 4px solid $text;
+}
+
 .element-list__item {
   line-height: 1.8;
   text-align: left;

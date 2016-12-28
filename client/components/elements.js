@@ -2,7 +2,7 @@
 
 import React from 'react'
 import Highlight from 'react-highlight'
-import { TITLE, TEXT, CODE, SECONDARY, EMPTY, HIGHLIGHTED, LIST, LINK } from '../../shared/constants'
+import { TITLE, TEXT, TABLE, CODE, SECONDARY, EMPTY, HIGHLIGHTED, LIST, LINK } from '../../shared/constants'
 
 import '../styles/elements.scss'
 
@@ -13,7 +13,8 @@ export default {
   [SECONDARY]: Secondary,
   [LIST]: List,
   [CODE]: Code,
-  [LINK]: Link
+  [LINK]: Link,
+  [TABLE]: Table
 }
 
 function Title({ value }) {
@@ -46,10 +47,17 @@ function List({ value }) {
   </ul>
 }
 
-export function Table({ rows }) {
+export function Table({ rows, hasHeading }) {
+  const bodyRows = hasHeading ? rows.slice(1) : rows
   return <table className="element-table">
+    {
+      hasHeading &&
+      <thead>
+        <tr>{rows[0].map((cell, cellIndex) => <th key={cellIndex}>{cell}</th>)}</tr>
+      </thead>
+    }
     <tbody>
-      {rows.map((row, rowIndex) =>
+      {bodyRows.map((row, rowIndex) =>
         <tr key={rowIndex}>
           {row.map((cell, cellIndex) =>
             <td key={cellIndex}>{cell}</td>

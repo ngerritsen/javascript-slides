@@ -1,5 +1,7 @@
 module.exports = {
   TITLE: 'TITLE',
+  TABLE_ROW: 'TABLE_ROW',
+  TABLE: 'TABLE',
   CODE: 'CODE',
   EMPTY: 'EMPTY',
   TEXT: 'TEXT',
