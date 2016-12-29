@@ -3,6 +3,12 @@
 ## modules
 
 ===
+📋
+
+===
+💻
+
+===
 ## module _[moj-ool]_ - Computers
 Part of a program that performs a distinct function.
 
@@ -23,9 +29,21 @@ A separable component.
 - Files ⬅
 
 ===
+- Global scope 😖
 - CommonJS
 - Asynchronous Module Definition (AMD)
 - ECMAScript 6 modules
+
+=== dark
+Global scope 😖
+
+```js
+// main.js
+console.log(window.message);
+
+// message.js
+window.message = 'Hello world!';
+```
 
 === dark
 CommonJS
@@ -44,7 +62,7 @@ AMD
 
 ```js
 // main.js
-define(['dependency'], (dependency) => {
+define('main', ['message'], (message) => {
   console.log(message);
 });
 
@@ -55,7 +73,7 @@ define('message', [], () => {
 ```
 
 === dark
-ECMAScript 6 modules
+ES6 modules
 
 ```js
 // main.js
@@ -102,17 +120,16 @@ require('some-file');
 
 === dark
 
-Package JSON (main default: _index.js_)
+Main file
 
 ```js
+// package.json
 {
   "main": "./src/main.js"
 }
 ```
 
-===
-
-Node.js 🔗 npm
+Default: _index.js_
 
 === dark
 
@@ -122,9 +139,41 @@ Relative file or module
 require('./some-file');
 
 // ./some-file.js
-// ./some-file/index.js
 // ./some-file/{MAIN}
 ```
+
+===
+
+Node.js 🔗 npm
+
+=== dark
+
+Requires/imports are by reference!
+
+```js
+// myObject.js
+module.exports = { name: 'John' };
+
+// a.js
+require('./myObject.js').name = 'Niels';
+
+// b.js
+console.log(require('./myObject.js').name); // 'Niels'
+```
+
+===
+
+Putting the JSON API live 🌎
+
+===
+
+What about ES6 Modules ❓
+
+===
+
+- Not yet supported by browsers
+- You need HTTP2 + server push for performance
+- Can be used now using transpiling and bundling
 
 ===
 
@@ -144,4 +193,4 @@ So yeah... ES6 modules are currently transpiled to AMD or a single bundle. 😅
 
 ===
 
-Putting the JSON API live 🌎
+Going client side 🖥
