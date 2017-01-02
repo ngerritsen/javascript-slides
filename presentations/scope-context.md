@@ -198,5 +198,27 @@ class MyModule {
 ===
 Rockets without context 🚀
 
+=== dark
+```javascript
+function createMyModule(element) {
+  const element = element;
+  const message = message;
+
+  init();
+
+  function init() {
+    element.addEventListener(onClick);
+  }
+
+  function onClick() {
+    alert(this.message);
+  }
+
+  return {
+    message
+  };
+}
+```
+
 ===
 Always weight the benefits of using context against the downsides.
