@@ -165,15 +165,14 @@ class MyModule {
   }
 
   _init() {
-    this._element.addEventListener(this._onClick)
+    this._element.addEventListener('click', this._onClick);
   }
 
   _onClick() {
-    alert(this.message)
+    alert(this.message);
   }
 }
 ```
-
 
 === dark
 ```javascript
@@ -185,7 +184,7 @@ class MyModule {
   }
 
   _init() {
-    this._element.addEventListener(this._onClick.bind(this))
+    this._element.addEventListener('click', this._onClick.bind(this));
   }
 
   _onClick() {
@@ -194,9 +193,30 @@ class MyModule {
 }
 ```
 
+=== dark
+```javascript
+class MyModule {
+  constructor(element) {
+    this._element = element;
+    this.message = 'Hello world!';
+    this._init();
+  }
+
+  _init() {
+    this._element.addEventListener('click', () => {
+      this._onClick()
+    });
+  }
+
+  _onClick() {
+    alert(this.message);
+  }
+}
+```
+
 
 ===
-Rockets without context 🚀
+Doing without context 🔮
 
 === dark
 ```javascript
@@ -207,7 +227,7 @@ function createMyModule(element) {
   init();
 
   function init() {
-    element.addEventListener(onClick);
+    element.addEventListener('click', onClick);
   }
 
   function onClick() {
