@@ -220,7 +220,7 @@ Doing without context 🔮
 
 === dark
 ```javascript
-function createMyModule(element) {
+function createMyModule(element, message) {
   const element = element;
   const message = message;
 
@@ -231,7 +231,7 @@ function createMyModule(element) {
   }
 
   function onClick() {
-    alert(this.message);
+    alert(message);
   }
 
   return {
